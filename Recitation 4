@@ -1,0 +1,41 @@
+<pre>
+<font color="#00979c">int</font> <font color="#000000">previous</font> <font color="#434f54">=</font> <font color="#000000">0</font><font color="#000000">;</font>
+<font color="#5e6d03">#include</font> <font color="#434f54">&lt;</font><b><font color="#d35400">Stepper</font></b><font color="#434f54">.</font><font color="#000000">h</font><font color="#434f54">&gt;</font>
+
+<font color="#00979c">const</font> <font color="#00979c">int</font> <font color="#000000">stepsPerRevolution</font> <font color="#434f54">=</font> <font color="#000000">200</font><font color="#000000">;</font> &nbsp;<font color="#434f54">&#47;&#47; change this to fit the number of steps per revolution</font>
+<font color="#434f54">&#47;&#47; for your motor</font>
+
+<font color="#434f54">&#47;&#47; initialize the stepper library on pins 8 through 11:</font>
+<b><font color="#d35400">Stepper</font></b> <font color="#000000">myStepper</font><font color="#000000">(</font><font color="#000000">stepsPerRevolution</font><font color="#434f54">,</font> <font color="#000000">8</font><font color="#434f54">,</font> <font color="#000000">9</font><font color="#434f54">,</font> <font color="#000000">10</font><font color="#434f54">,</font> <font color="#000000">11</font><font color="#000000">)</font><font color="#000000">;</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; set the speed at 60 rpm:</font>
+ &nbsp;<font color="#000000">myStepper</font><font color="#434f54">.</font><font color="#d35400">setSpeed</font><font color="#000000">(</font><font color="#000000">60</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#434f54">&#47;&#47; initialize the serial port:</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; set the speed of the motor to 30 RPMs</font>
+ &nbsp;<font color="#000000">myStepper</font><font color="#434f54">.</font><font color="#d35400">setSpeed</font><font color="#000000">(</font><font color="#000000">30</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; step one revolution &nbsp;in one direction:</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;clockwise&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">myStepper</font><font color="#434f54">.</font><font color="#d35400">step</font><font color="#000000">(</font><font color="#000000">stepsPerRevolution</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">500</font><font color="#000000">)</font><font color="#000000">;</font>
+
+ &nbsp;<font color="#434f54">&#47;&#47; step one revolution in the other direction:</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;counterclockwise&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">myStepper</font><font color="#434f54">.</font><font color="#d35400">step</font><font color="#000000">(</font><font color="#434f54">-</font><font color="#000000">stepsPerRevolution</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#d35400">delay</font><font color="#000000">(</font><font color="#000000">500</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; get the sensor value</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">val</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">0</font><font color="#000000">)</font><font color="#000000">;</font>
+
+ &nbsp;<font color="#434f54">&#47;&#47; move a number of steps equal to the change in the</font>
+ &nbsp;<font color="#434f54">&#47;&#47; sensor reading</font>
+ &nbsp;<font color="#000000">myStepper</font><font color="#434f54">.</font><font color="#d35400">step</font><font color="#000000">(</font><font color="#000000">val</font> <font color="#434f54">-</font> <font color="#000000">previous</font><font color="#000000">)</font><font color="#000000">;</font>
+
+ &nbsp;<font color="#434f54">&#47;&#47; remember the previous value of the sensor</font>
+ &nbsp;<font color="#000000">previous</font> <font color="#434f54">=</font> <font color="#000000">val</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+</pre>
